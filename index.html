@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>El nuevo Pinar padel</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/style.css" />
+
+    <!-- Librería SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- JS -->
+
+    <script defer src="./js/storage.js"></script>
+    <script defer src="./js/main.js"></script>
+    <link rel="icon" type="image/x-icon" href="./images/icono.ico" />
+  </head>
+  <body>
+    <header>
+      <h1>"EL NUEVO PINAR PADEL"</h1>
+      <h2>Reserva tu turno</h2>
+      <p>Completa los siguientes campos para reservar tu turno</p>
+    </header>
+    <main>
+      <!-- Formulario para ingresar datos -->
+
+      <form id="formTurno">
+        <!-- Nombre -->
+        <label for="nombre-apellido">Nombre y Apellido: </label>
+        <input
+          type="text"
+          id="nombre-apellido"
+          name="nombre-apellido"
+          placeholder="Ej: Juan Perez"
+          required
+        />
+
+        <!-- Fecha -->
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" name="fecha" required />
+
+        <!-- Hora -->
+        <label for="hora">Hora:</label>
+        <select name="hora" id="hora" required>
+          <option value="">Seleccione una hora</option>
+          <option value="10:00">10:00</option>
+          <option value="11:00">11:00</option>
+          <option value="12:00">12:00</option>
+          <option value="13:00">13:00</option>
+          <option value="14:00">14:00</option>
+          <option value="15:00">15:00</option>
+          <option value="16:00">16:00</option>
+          <option value="17:00">17:00</option>
+          <option value="18:00">18:00</option>
+          <option value="19:00">19:00</option>
+          <option value="20:00">20:00</option>
+          <option value="21:00">21:00</option>
+          <option value="22:00">22:00</option>
+          <option value="23:00">23:00</option>
+        </select>
+      </form>
+
+      <!-- Botones -->
+      <div id="botones">
+        <button id="btn-reservar">Reservar Turno</button>
+        <button id="btn-vaciar">Vaciar turnos</button>
+      </div>
+
+      <!-- Contenedor de turnos -->
+      <div id="turnos-reservados">
+        <h2>Turnos Reservados</h2>
+      </div>
+    </main>
+  </body>
+</html>
