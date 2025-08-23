@@ -2,6 +2,7 @@
 const formularioTurno = document.getElementById("formTurno");
 const botonReservar = document.getElementById("btn-reservar");
 const botonVaciar = document.getElementById("btn-vaciar");
+const botonVer = document.getElementById("btn-ver-turnos");
 const contenedorTurnos = document.getElementById("turnos-reservados");
 
 // ------------------ FETCH + TRY-CATCH-FINALLY ------------------ //
@@ -35,7 +36,10 @@ async function cargarHorarios() {
 
 // Mostrar turnos guardados cuando se carga la página
 
-document.addEventListener("DOMContentLoaded", () => {
+// Cambie el evento DOMContentLoaded por un boton (ver turnos) para mostrar los turnos en pantalla cuando el usuario quiera.
+
+// Ver Turnos
+botonVer.addEventListener("click", () => {
   cargarHorarios();
   mostrarTurnosEnPantalla(cargarTurnosDesdeStorage());
 });
