@@ -4,6 +4,7 @@ const botonReservar = document.getElementById("btn-reservar");
 const botonVaciar = document.getElementById("btn-vaciar");
 const botonVer = document.getElementById("btn-ver-turnos");
 const contenedorTurnos = document.getElementById("turnos-reservados");
+let turnoEnEdicion = null;
 
 // Campo "nombre-apellido" solo letras y espacios
 
@@ -68,6 +69,28 @@ botonReservar.addEventListener("click", () => {
   const hora = document.getElementById("hora").value;
 
   validarYReservar({ nombre, fecha, hora }, (turnoValido) => {
+    if (turnoEnEdicion) {
+      // Editar turno existente
+      const turnosActualizados = modificarTurnos((turnos) =>
+        turnos.map((turno) =>
+          turno.id === turnoEnEdicion
+            ? {
+                ...turno,
+                nombre: turnoValido.nombre,
+                fecha: turnoValido.fecha,
+                hora: turnoValido.hora,
+              }
+            : turno
+        )
+      );
+
+      mostrarTurnosEnPantalla(turnosActualizados);
+      Swal.fire("Turno actualizado", "", "success");
+      turnoEnEdicion = null; // salir de la edición
+      formularioTurno.reset();
+      return;
+    }
+
     const turnosExistentes = cargarTurnosDesdeStorage();
 
     // Verificar si ya hay un turno con la misma fecha y hora
@@ -161,6 +184,20 @@ function mostrarTurnosEnPantalla(listaTurnos) {
         Swal.fire("Turno eliminado", "", "info");
       });
 
+      const botonEditar = document.createElement("button");
+      botonEditar.textContent = "✏️";
+      botonEditar.addEventListener("click", () => {
+        document.getElementById("nombre-apellido").value = turno.nombre;
+        document.getElementById("fecha").value = turno.fecha;
+        document.getElementById("hora").value = turno.hora;
+        turnoEnEdicion = turno.id; // guardamos qué turno estamos editando
+        Swal.fire(
+          "Edita el turno desde el formulario",
+          "Modifica los datos y guarda nuevamente",
+          "info"
+        );
+      });
+      divTurno.appendChild(botonEditar);
       divTurno.appendChild(botonBorrar);
       contenedorTurnos.appendChild(divTurno);
     });
