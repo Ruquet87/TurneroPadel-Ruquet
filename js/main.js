@@ -32,10 +32,10 @@ async function cargarHorarios() {
     const horarios = await respuesta.json();
 
     const selectHora = document.getElementById("hora");
-    horarios.forEach((h) => {
+    horarios.forEach((horario) => {
       const option = document.createElement("option");
-      option.value = h.hora;
-      option.textContent = h.hora;
+      option.value = horario.hora;
+      option.textContent = horario.hora;
       selectHora.appendChild(option);
     });
 
@@ -50,12 +50,8 @@ async function cargarHorarios() {
 
 // ------------------ EVENTOS ------------------ //
 
-// Mostrar turnos guardados cuando se carga la página
+// Cambie el evento DOMContentLoaded por un boton (ver turnos) para mostrar/ocultar los turnos en pantalla cuando el usuario quiera.
 
-// Cambie el evento DOMContentLoaded por un boton (ver turnos) para mostrar los turnos en pantalla cuando el usuario quiera.
-
-// Ver Turnos
-// Ver y ocultar turnos
 botonVer.addEventListener("click", () => {
   if (contenedorTurnos.innerHTML === "<h2>Turnos Reservados</h2>") {
     cargarHorarios();
@@ -76,7 +72,9 @@ botonReservar.addEventListener("click", () => {
 
     // Verificar si ya hay un turno con la misma fecha y hora
     const yaReservado = turnosExistentes.some(
-      (t) => t.fecha === turnoValido.fecha && t.hora === turnoValido.hora
+      (turnoExistente) =>
+        turnoExistente.fecha === turnoValido.fecha &&
+        turnoExistente.hora === turnoValido.hora
     );
 
     if (yaReservado) {
@@ -127,11 +125,11 @@ function mostrarTurnosEnPantalla(listaTurnos) {
 
   // Ordenar por fecha y hora
 
-  const turnosOrdenados = listaTurnos.sort((a, b) => {
-    if (a.fecha === b.fecha) {
-      return a.hora.localeCompare(b.hora);
+  const turnosOrdenados = listaTurnos.sort((turnoA, turnoB) => {
+    if (turnoA.fecha === turnoB.fecha) {
+      return turnoA.hora.localeCompare(turnoB.hora);
     }
-    return new Date(a.fecha) - new Date(b.fecha);
+    return new Date(turnoA.fecha) - new Date(turnoB.fecha);
   });
 
   // Agrupar por fecha
@@ -144,17 +142,14 @@ function mostrarTurnosEnPantalla(listaTurnos) {
     grupos[turno.fecha].push(turno);
   });
 
-  // Mostrar cada grupo
-
-  for (const fecha in grupos) {
+  // Mostrar cada grupo, elimine el for in
+  Object.keys(grupos).forEach((fecha) => {
     // Encabezado con la fecha
-
     const tituloFecha = document.createElement("h3");
     tituloFecha.textContent = `📅 ${fecha}`;
     contenedorTurnos.appendChild(tituloFecha);
 
     // Mostrar turnos de esa fecha
-
     grupos[fecha].forEach((turno) => {
       const divTurno = document.createElement("div");
       divTurno.textContent = ` ${turno.hora} hs - ${turno.nombre}`;
@@ -169,5 +164,5 @@ function mostrarTurnosEnPantalla(listaTurnos) {
       divTurno.appendChild(botonBorrar);
       contenedorTurnos.appendChild(divTurno);
     });
-  }
+  });
 }

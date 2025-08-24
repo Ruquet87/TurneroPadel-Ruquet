@@ -23,7 +23,9 @@ function modificarTurnos(accion) {
 
 // Borrar turno por ID
 function borrarTurnoPorId(idTurno) {
-  return modificarTurnos((turnos) => turnos.filter((t) => t.id !== idTurno));
+  return modificarTurnos((turnos) =>
+    turnos.filter((turno) => turno.id !== idTurno)
+  );
 }
 
 // Vaciar todos los turnos

@@ -85,7 +85,8 @@ form#formTurno select {
 }
 
 /* BTN RESERVAR */
-#btn-reservar {
+#btn-reservar,
+#btn-ver-turnos {
   background: linear-gradient(
     180deg,
     rgba(155, 71, 180, 0.5),
@@ -96,7 +97,8 @@ form#formTurno select {
   padding: 10px 20px;
   cursor: pointer;
 }
-#btn-reservar:hover {
+#btn-reservar:hover,
+#btn-ver-turnos:hover {
   transform: translateY(-2px);
 }
 
