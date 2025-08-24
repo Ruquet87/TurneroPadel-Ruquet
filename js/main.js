@@ -5,6 +5,22 @@ const botonVaciar = document.getElementById("btn-vaciar");
 const botonVer = document.getElementById("btn-ver-turnos");
 const contenedorTurnos = document.getElementById("turnos-reservados");
 
+// Campo "nombre-apellido" solo letras y espacios
+
+const inputNombre = document.getElementById("nombre-apellido");
+inputNombre.addEventListener("input", () => {
+  inputNombre.value = inputNombre.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ ]/g, "");
+});
+
+// Fecha a partir del dia actual en adelante
+
+const inputFecha = document.getElementById("fecha");
+const hoy = new Date();
+const año = hoy.getFullYear();
+const mes = String(hoy.getMonth() + 1).padStart(2, "0");
+const dia = String(hoy.getDate()).padStart(2, "0");
+inputFecha.min = `${año}-${mes}-${dia}`;
+
 // ------------------ FETCH + TRY-CATCH-FINALLY ------------------ //
 async function cargarHorarios() {
   try {
@@ -39,9 +55,14 @@ async function cargarHorarios() {
 // Cambie el evento DOMContentLoaded por un boton (ver turnos) para mostrar los turnos en pantalla cuando el usuario quiera.
 
 // Ver Turnos
+// Ver y ocultar turnos
 botonVer.addEventListener("click", () => {
-  cargarHorarios();
-  mostrarTurnosEnPantalla(cargarTurnosDesdeStorage());
+  if (contenedorTurnos.innerHTML === "<h2>Turnos Reservados</h2>") {
+    cargarHorarios();
+    mostrarTurnosEnPantalla(cargarTurnosDesdeStorage());
+  } else {
+    contenedorTurnos.innerHTML = "<h2>Turnos Reservados</h2>";
+  }
 });
 
 // Reservar turno
