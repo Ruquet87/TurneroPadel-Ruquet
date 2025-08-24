@@ -33,6 +33,8 @@ async function cargarHorarios() {
     const horarios = await respuesta.json();
 
     const selectHora = document.getElementById("hora");
+    selectHora.innerHTML = "<option value=''>Seleccione hora</option>"; // se limpia el selec
+
     horarios.forEach((horario) => {
       const option = document.createElement("option");
       option.value = horario.hora;
